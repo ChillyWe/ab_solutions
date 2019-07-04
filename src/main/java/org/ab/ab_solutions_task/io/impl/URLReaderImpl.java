@@ -11,8 +11,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class URLReaderImpl implements URLReader {
 	
+	// Logger ----------------------------------
 	private static final Logger LOGGER = Logger.getLogger(URLReaderImpl.class.getName());
 
+	// Constructors ----------------------------------
+	public URLReaderImpl() {
+		super();
+	}
+	
+	// Public methods ----------------------------------
 	public String read(URL url) {
 		StringBuilder inline = new StringBuilder();
 		Scanner sc;

@@ -7,6 +7,7 @@ public class FixerException extends Exception {
 	 */
 	private static final long serialVersionUID = -2688701451891253531L;
 
+	// Constructors ----------------------------------
 	public FixerException() {
 		super();
 	}

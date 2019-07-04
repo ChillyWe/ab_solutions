@@ -15,10 +15,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/report")
 public class ReportController extends BaseController {
 
+	// Constructors ----------------------------------
 	public ReportController(ObjectMapper objectMapper, URLReaderImpl urlReader) {
 		super(objectMapper, urlReader);
 	}
 
+	// Public methods ----------------------------------
 	@GetMapping(path = "/{currency}/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode handle(Model model, @PathVariable String currency, @PathVariable String date) {
 		

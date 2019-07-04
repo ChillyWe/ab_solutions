@@ -2,9 +2,12 @@ package org.ab.ab_solutions_task;
 
 public class Constants {
 
+	// Constructor ----------------------------------
 	private Constants() {
 		super();
 	}
+	
+	// Constants ----------------------------------
 	public static final String KEY_FOR_FIXER = "1044dc5ed8f8b4d8fa259794bbb38fcc";
 
 	public static final String FIXER_EXCEPTION_MESSAGE = "This exception is from fixer.io: \nHttpResponseCode: ";

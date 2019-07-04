@@ -14,9 +14,11 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class BaseRateServiceImpl implements BaseRateService {
 
+	// Private fields ----------------------------------
 	private final BaseRateRepository baseRateRepository;
 	private final RateRepository rateRepository;
 
+	// Constructors ----------------------------------
 	@Autowired
 	public BaseRateServiceImpl(BaseRateRepository baseRateRepository, RateRepository rateRepository) {
 		super();
@@ -24,6 +26,9 @@ public class BaseRateServiceImpl implements BaseRateService {
 		this.rateRepository = rateRepository;
 	}
 
+	// Public methods ----------------------------------
+	// Method used for transfer BaseRateDTO to BaseRate and store it in database
+	// There is a way to be used jackson - objectMapper, but I prefer to do it this way 
 	public void create(BaseRateJSONImportDTO dto) {			
 		
 		if (!dto.getSuccess()) {
@@ -47,6 +52,5 @@ public class BaseRateServiceImpl implements BaseRateService {
 		});
 		
         this.baseRateRepository.saveAndFlush(baseRate);
-    }
-	
+    }	
 }

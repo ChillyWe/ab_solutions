@@ -11,15 +11,18 @@ import javax.persistence.Table;
 @Table(name = "rates")
 public class Rate extends BaseEntity {
 
+	// Private fields ----------------------------------
 	private String symbols;
 	private Double rateValue;
 
 	private BaseRate base;
 
+	// Constructors ----------------------------------
 	public Rate() {
 		super();
 	}
 
+	// Getters and Setters ------------------------------
 	@Column(name = "symbols")
 	public String getSymbols() {
 		return this.symbols;
@@ -48,6 +51,7 @@ public class Rate extends BaseEntity {
 		this.base = baseRate;
 	}
 
+	// hashCode, equals and toString ----------------------------------
 	@Override
 	public int hashCode() {
 		final int prime = 31;

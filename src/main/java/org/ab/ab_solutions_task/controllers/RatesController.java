@@ -27,21 +27,23 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/rates")
 public class RatesController extends BaseController {
 
+	// Private fields ----------------------------------
 	private final BaseRateService baseRateService;
 
+	// Constructors ----------------------------------
 	public RatesController(ObjectMapper objectMapper, URLReaderImpl urlReader, BaseRateServiceImpl latestRateService) {
 		super(objectMapper, urlReader);
 		this.baseRateService = latestRateService;
 	}
 
+	// Public methods ----------------------------------
 	@GetMapping(path = "/historic/{base}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<JsonNode> handleHistoricModelWithBaseForYear(Model model, @PathVariable String base) {
 
 		List<JsonNode> result = new LinkedList<JsonNode>();
 
 		this.getDatesBetweenYear(Constants.STRING_VALUE_OF_1999).stream().forEach(day -> {
-			JsonNode jsonDayWithBase = super.readJSONfromURI(String
-					.format("http://data.fixer.io/api/%s?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, day.toString(), base));
+			JsonNode jsonDayWithBase = super.readJSONfromURI(String.format("http://data.fixer.io/api/%s?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, day.toString(), base));
 			
 			result.add(jsonDayWithBase);		
 			this.saveJSONObject(jsonDayWithBase);
@@ -50,22 +52,17 @@ public class RatesController extends BaseController {
 		return result;
 	}
 
-
-
 	@GetMapping(path = "/historic/{base}/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode handleHistoricModelWithBaseAndDate(Model model, @PathVariable String base, @PathVariable String date) {
 
-		return super.readJSONfromURI(String
-				.format("http://data.fixer.io/api/%s?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, date, base));
+		return super.readJSONfromURI(String.format("http://data.fixer.io/api/%s?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, date, base));
 
 	}
 
 	@GetMapping(path = "/latest/{base}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode handleLatestWithBase(Model model, @PathVariable String base) {
 		
-		
-		JsonNode jsonLatestWithBase = super.readJSONfromURI(String
-				.format("http://data.fixer.io/api/latest?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, base));
+		JsonNode jsonLatestWithBase = super.readJSONfromURI(String.format("http://data.fixer.io/api/latest?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, base));
 //		JsonNode jsonLatestWithBase = null;
 //
 //		try {
@@ -81,6 +78,8 @@ public class RatesController extends BaseController {
 
 	}
 
+	// Private methods ----------------------------------
+	// Custom method to return all days from year
 	private List<LocalDate> getDatesBetweenYear(String year) {
 
 		LocalDate startDate = LocalDate.of(Integer.parseInt(year), 1, 1);
@@ -90,6 +89,7 @@ public class RatesController extends BaseController {
 		return startDate.datesUntil(endDate).collect(Collectors.toList());
 	}
 	
+	// this method save JSON object in database
 	private void saveJSONObject(JsonNode jsonDayWithBase) {
 		try {
 			String obj = jsonDayWithBase.toString();

@@ -6,6 +6,7 @@ import java.util.Map;
 
 public class BaseRateJSONImportDTO {
 
+	// Private fields ----------------------------------
 	private Boolean success;
 	private Long timestamp;
 	private String base;
@@ -13,11 +14,13 @@ public class BaseRateJSONImportDTO {
 	
 	private Map<String, Double> rates;
 
+	// Constructors ----------------------------------
 	public BaseRateJSONImportDTO() {
 		super();
 		this.rates = new HashMap<String, Double>();
 	}
 
+	// Getters and Setters ------------------------------
 	public Boolean getSuccess() {
 		return this.success;
 	}
@@ -58,13 +61,14 @@ public class BaseRateJSONImportDTO {
 		this.rates = rates;
 	}
 
+	// hashCode, equals and toString ----------------------------------
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((base == null) ? 0 : base.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((rates == null) ? 0 : rates.hashCode());
+		result = prime * result + ((rates == null) ? 0 : rates.hashCode());  // for some reason this line can be a problem
 		result = prime * result + ((success == null) ? 0 : success.hashCode());
 		result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
 		return result;

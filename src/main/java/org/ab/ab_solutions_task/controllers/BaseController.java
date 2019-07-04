@@ -17,17 +17,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public abstract class BaseController {
 
+	// Logger ----------------------------------
 	protected static final Logger LOGGER = Logger.getLogger(BaseController.class.getName());
 	
+	// Protected fields ----------------------------------
 	protected final ObjectMapper objectMapper;
 	protected final URLReader urlReader;
 	
+	// Constructors ----------------------------------
 	@Autowired
 	protected BaseController(ObjectMapper objectMapper, URLReaderImpl urlReader) {
 		this.objectMapper = objectMapper;
 		this.urlReader = urlReader;
 	}
 	
+	// Protected methods ----------------------------------
 	protected JsonNode readJSONfromURI(String uriString) {	
 		JsonNode result = null;
 		String jsonStringResult = Constants.EMPTY_STRING;

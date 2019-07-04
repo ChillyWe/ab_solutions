@@ -9,11 +9,14 @@ import org.hibernate.annotations.GenericGenerator;
 @MappedSuperclass
 public abstract class BaseEntity {
 
-	private String id;
+	// Protected fields ----------------------------------
+	protected String id;
 	
+	// Constructors ----------------------------------
 	protected BaseEntity() {		
 	}
 
+	// Getters and Setters ------------------------------
 	@Id
 	@GeneratedValue(generator = "uuid-string")
 	@GenericGenerator(name = "uuid-string", strategy = "org.hibernate.id.UUIDGenerator")
@@ -25,6 +28,7 @@ public abstract class BaseEntity {
 		this.id = id;
 	}
 
+	// hashCode, equals and toString ----------------------------------
 	@Override
 	public int hashCode() {
 		final int prime = 31;

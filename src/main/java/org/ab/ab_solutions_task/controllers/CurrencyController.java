@@ -13,10 +13,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RestController
 public class CurrencyController extends BaseController {
 
+	// Constructors ----------------------------------
 	public CurrencyController(ObjectMapper objectMapper, URLReaderImpl urlReader) {
 		super(objectMapper, urlReader);
 	}
 
+	// Public methods ----------------------------------
 	@GetMapping(path = "/currency", produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode handle(Model model) {
 

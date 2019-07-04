@@ -14,6 +14,7 @@ import javax.persistence.Table;
 @Table(name = "base_rates")
 public class BaseRate extends BaseEntity{
 
+	// Private fields ----------------------------------
 	private Boolean success;
 	private Long timestamp;
 	private String base;
@@ -21,11 +22,13 @@ public class BaseRate extends BaseEntity{
 	
 	private Set<Rate> rates;
 
+	// Constructors ----------------------------------
 	public BaseRate() {
 		super();
 		this.rates = new HashSet<Rate>();
 	}
 
+	// Getters and Setters ------------------------------
 	@Column(name = "success")
 	public Boolean getSuccess() {
 		return this.success;
@@ -71,6 +74,7 @@ public class BaseRate extends BaseEntity{
 		this.rates = rates;
 	}
 
+	// hashCode, equals and toString ----------------------------------
 	@Override
 	public int hashCode() {
 		final int prime = 31;
