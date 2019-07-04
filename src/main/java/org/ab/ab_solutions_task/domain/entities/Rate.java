@@ -44,8 +44,8 @@ public class Rate extends BaseEntity {
 		return base;
 	}
 
-	public void setBase(BaseRate base) {
-		this.base = base;
+	public void setBase(BaseRate baseRate) {
+		this.base = baseRate;
 	}
 
 	@Override
@@ -87,6 +87,6 @@ public class Rate extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return "Rate [symbols=" + symbols + ", rateValue=" + rateValue + ", base=" + base + "]";
+		return "Rate [symbols=" + symbols + ", rateValue=" + rateValue + ", baseRate=" + base + "]";
 	}
 }

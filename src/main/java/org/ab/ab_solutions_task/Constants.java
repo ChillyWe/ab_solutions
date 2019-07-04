@@ -5,8 +5,9 @@ public class Constants {
 	private Constants() {
 		super();
 	}
+	public static final String KEY_FOR_FIXER = "1044dc5ed8f8b4d8fa259794bbb38fcc";
 
-	public static final String HTTP_RESPONSE_CODE_MESSAGE = "HttpResponseCode: ";
+	public static final String FIXER_EXCEPTION_MESSAGE = "This exception is from fixer.io: \nHttpResponseCode: ";
 	
 	public static final String HTTP_GET_METHOD = "GET";
 	

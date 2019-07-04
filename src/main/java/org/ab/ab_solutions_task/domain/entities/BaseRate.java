@@ -77,7 +77,7 @@ public class BaseRate extends BaseEntity{
 		int result = super.hashCode();
 		result = prime * result + ((base == null) ? 0 : base.hashCode());
 		result = prime * result + ((date == null) ? 0 : date.hashCode());
-		result = prime * result + ((rates == null) ? 0 : rates.hashCode());
+//		result = prime * result + ((rates == null) ? 0 : rates.hashCode());
 		result = prime * result + ((success == null) ? 0 : success.hashCode());
 		result = prime * result + ((timestamp == null) ? 0 : timestamp.hashCode());
 		return result;

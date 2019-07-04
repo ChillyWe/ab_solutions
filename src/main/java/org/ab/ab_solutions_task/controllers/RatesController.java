@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import org.ab.ab_solutions_task.Constants;
 import org.ab.ab_solutions_task.domain.models.dtos.BaseRateJSONImportDTO;
 import org.ab.ab_solutions_task.io.impl.URLReaderImpl;
-import org.ab.ab_solutions_task.services.contacts.LatestRateService;
+import org.ab.ab_solutions_task.services.contacts.BaseRateService;
 import org.ab.ab_solutions_task.services.impl.BaseRateServiceImpl;
 import org.springframework.http.MediaType;
 import org.springframework.ui.Model;
@@ -27,11 +27,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RequestMapping("/rates")
 public class RatesController extends BaseController {
 
-	private final LatestRateService latestRateService;
+	private final BaseRateService baseRateService;
 
 	public RatesController(ObjectMapper objectMapper, URLReaderImpl urlReader, BaseRateServiceImpl latestRateService) {
 		super(objectMapper, urlReader);
-		this.latestRateService = latestRateService;
+		this.baseRateService = latestRateService;
 	}
 
 	@GetMapping(path = "/historic/{base}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -41,7 +41,7 @@ public class RatesController extends BaseController {
 
 		this.getDatesBetweenYear(Constants.STRING_VALUE_OF_1999).stream().forEach(day -> {
 			JsonNode jsonDayWithBase = super.readJSONfromURI(String
-					.format("http://data.fixer.io/api/%s?access_key=1044dc5ed8f8b4d8fa259794bbb38fcc&base=%s", day.toString(), base));
+					.format("http://data.fixer.io/api/%s?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, day.toString(), base));
 			
 			result.add(jsonDayWithBase);		
 			this.saveJSONObject(jsonDayWithBase);
@@ -56,15 +56,16 @@ public class RatesController extends BaseController {
 	public JsonNode handleHistoricModelWithBaseAndDate(Model model, @PathVariable String base, @PathVariable String date) {
 
 		return super.readJSONfromURI(String
-				.format("http://data.fixer.io/api/%s?access_key=1044dc5ed8f8b4d8fa259794bbb38fcc&base=%s", date, base));
+				.format("http://data.fixer.io/api/%s?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, date, base));
 
 	}
 
 	@GetMapping(path = "/latest/{base}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode handleLatestWithBase(Model model, @PathVariable String base) {
-
+		
+		
 		JsonNode jsonLatestWithBase = super.readJSONfromURI(String
-				.format("http://data.fixer.io/api/latest?access_key=1044dc5ed8f8b4d8fa259794bbb38fcc&base=%s", base));
+				.format("http://data.fixer.io/api/latest?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, base));
 //		JsonNode jsonLatestWithBase = null;
 //
 //		try {
@@ -74,7 +75,6 @@ public class RatesController extends BaseController {
 //			// TODO Auto-generated catch block
 //			e1.printStackTrace();
 //		}
-
 		this.saveJSONObject(jsonLatestWithBase);
 
 		return jsonLatestWithBase;
@@ -94,16 +94,13 @@ public class RatesController extends BaseController {
 		try {
 			String obj = jsonDayWithBase.toString();
 			BaseRateJSONImportDTO modelDTO = super.objectMapper.readValue(obj, BaseRateJSONImportDTO.class);
-			this.latestRateService.create(modelDTO);
-		} catch (JsonParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (JsonMappingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			this.baseRateService.create(modelDTO);
+		} catch (JsonParseException jsonpe) {
+			LOGGER.info(jsonpe.getMessage());
+		} catch (JsonMappingException jsonme) {
+			LOGGER.info(jsonme.getMessage());
+		} catch (IOException ioe) {
+			LOGGER.info(ioe.getMessage());
 		}
 	}
 }
