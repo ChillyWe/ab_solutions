@@ -32,6 +32,7 @@ public abstract class BaseController {
 	}
 	
 	// Protected methods ----------------------------------
+	// Method to extract json data from URL
 	protected JsonNode readJSONfromURI(String uriString) {	
 		JsonNode result = null;
 		String jsonStringResult = Constants.EMPTY_STRING;

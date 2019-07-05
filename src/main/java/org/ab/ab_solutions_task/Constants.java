@@ -18,4 +18,6 @@ public class Constants {
 	
 	public static final String STRING_VALUE_OF_1999 = "1999";
 	
+	public static final String EUR_AS_STRING_VALUE = "EUR";
+	
 }

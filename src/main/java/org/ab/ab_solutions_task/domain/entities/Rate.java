@@ -88,9 +88,4 @@ public class Rate extends BaseEntity {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "Rate [symbols=" + symbols + ", rateValue=" + rateValue + ", baseRate=" + base + "]";
-	}
 }
