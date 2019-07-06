@@ -42,8 +42,9 @@ public class RatesController extends BaseController {
 
 		List<JsonNode> result = new LinkedList<JsonNode>();
 
-		this.getDatesBetweenYear(Constants.STRING_VALUE_OF_1999).stream().forEach(day -> {
-			JsonNode jsonDayWithBase = super.readJSONfromURI(String.format("http://data.fixer.io/api/%s?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, day.toString(), base));
+		this.getDatesFromYear(Constants.STRING_VALUE_OF_1999).stream().forEach(day -> {
+			JsonNode jsonDayWithBase = super.readJSONfromURI(String.
+					format("http://data.fixer.io/api/%s?access_key=%s&base=%s", day.toString(), Constants.KEY_FOR_FIXER, base));
 			
 			result.add(jsonDayWithBase);		
 			this.saveJSONObject(jsonDayWithBase);
@@ -55,7 +56,10 @@ public class RatesController extends BaseController {
 	@GetMapping(path = "/historic/{base}/{date}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public JsonNode handleHistoricModelWithBaseAndDate(Model model, @PathVariable String base, @PathVariable String date) {
 
-		return super.readJSONfromURI(String.format("http://data.fixer.io/api/%s?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, date, base));
+		JsonNode jsonHistoricWithBaseAndDate = super.readJSONfromURI(String.format("http://data.fixer.io/api/%s?access_key=%s&base=%s", date, Constants.KEY_FOR_FIXER, base));
+		this.saveJSONObject(jsonHistoricWithBaseAndDate);
+		
+		return jsonHistoricWithBaseAndDate;
 
 	}
 
@@ -63,7 +67,6 @@ public class RatesController extends BaseController {
 	public JsonNode handleLatestWithBase(Model model, @PathVariable String base) {
 		
 		JsonNode jsonLatestWithBase = super.readJSONfromURI(String.format("http://data.fixer.io/api/latest?access_key=%s&base=%s", Constants.KEY_FOR_FIXER, base));
-
 		this.saveJSONObject(jsonLatestWithBase);
 
 		return jsonLatestWithBase;
@@ -72,11 +75,10 @@ public class RatesController extends BaseController {
 
 	// Private methods ----------------------------------
 	// Custom method to return all days from year
-	private List<LocalDate> getDatesBetweenYear(String year) {
+	private List<LocalDate> getDatesFromYear(String year) {
 
 		LocalDate startDate = LocalDate.of(Integer.parseInt(year), 1, 1);
-		// TODO don't forget to change month
-		LocalDate endDate = LocalDate.of(Integer.parseInt(year), 1, 31);
+		LocalDate endDate = LocalDate.of(Integer.parseInt(year), 12, 31);
 		
 		return startDate.datesUntil(endDate).collect(Collectors.toList());
 	}
